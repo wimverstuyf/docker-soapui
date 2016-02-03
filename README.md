@@ -1,2 +1,3 @@
-# Soapui base image
-Contains soapui 5.2.1
+# Docker SoapUI
+
+> Docker container that houses a configurable version of SoapUI and runs test suites
