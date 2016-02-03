@@ -1,3 +1,4 @@
+FROM python
 FROM edwxie/jdk
 MAINTAINER Daniel Davison <sircapsalot@gmail.com>
 
