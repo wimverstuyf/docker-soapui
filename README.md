@@ -18,11 +18,13 @@ $ vagrant ssh
 Once the server is up and running, you can now fire off SoapUI tests by sending the SoapUI project file  
 Vagrant forwards the 3000 port to your local machine.
 
+```sh
 $ curl --form "data=@/users/ddavison/work/ericsson/soapui/soapui-project.xml" \
        --form "url=http://jsonplaceholder.typicode.com" \
        --form "suite=TestSuite" \
        http://localhost:3000
-       
+```
+
 ```
 ================================
 =
