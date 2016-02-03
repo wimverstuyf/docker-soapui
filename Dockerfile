@@ -1,8 +1,11 @@
 FROM edwxie/jdk
-MAINTAINER Edward Xie <edward.xie@leandev.se>, Daniel Davison <sircapsalot@gmail.com>
+MAINTAINER Daniel Davison <sircapsalot@gmail.com>
 
 #  Version
 ENV   SOAPUI_VERSION  5.2.1
+
+COPY entry_point.sh /opt/bin/entry_point.sh
+RUN chmod +x /opt/bin/entry_point.sh
 
 # Download and unarchive SoapUI
 RUN mkdir -p /opt &&\
@@ -12,3 +15,5 @@ RUN mkdir -p /opt &&\
 
 # Set environment
 ENV PATH ${PATH}:/opt/SoapUI/bin
+
+CMD ["/opt/bin/entry_point.sh"]
