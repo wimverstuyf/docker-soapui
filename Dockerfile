@@ -1,12 +1,16 @@
-FROM python
-FROM edwxie/jdk
+FROM centos:7
+FROM python:2.7
+FROM java:openjdk-7-jdk
 MAINTAINER Daniel Davison <sircapsalot@gmail.com>
 
 #  Version
 ENV   SOAPUI_VERSION  5.2.1
 
 COPY entry_point.sh /opt/bin/entry_point.sh
+COPY server.py /opt/bin/server.py
+
 RUN chmod +x /opt/bin/entry_point.sh
+RUN chmod +x /opt/bin/server.py
 
 # Download and unarchive SoapUI
 RUN mkdir -p /opt &&\
@@ -17,4 +21,5 @@ RUN mkdir -p /opt &&\
 # Set environment
 ENV PATH ${PATH}:/opt/SoapUI/bin
 
+EXPOSE 3000
 CMD ["/opt/bin/entry_point.sh"]

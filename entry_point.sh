@@ -5,7 +5,7 @@ function shutdown() {
   wait $PID
 }
 
-python server.py &
+python /opt/bin/server.py &
 PID=$!
 
 trap shutdown SIGTERM SIGINT
