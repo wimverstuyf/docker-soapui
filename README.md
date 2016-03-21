@@ -15,8 +15,11 @@ $ vagrant ssh
 # ./server.py
 ```
 
+Use
+===
+
 Once the server is up and running, you can now fire off SoapUI tests by sending the SoapUI project file  
-Vagrant forwards the 3000 port to your local machine.
+Vagrant forwards the `3000` port to your local machine.
 
 ```sh
 $ curl --form "data=@/users/ddavison/work/ericsson/soapui/soapui-project.xml" \
@@ -25,6 +28,7 @@ $ curl --form "data=@/users/ddavison/work/ericsson/soapui/soapui-project.xml" \
        http://localhost:3000
 ```
 
+*Response...*
 ```
 ================================
 =
