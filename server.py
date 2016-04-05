@@ -61,7 +61,7 @@ class S(BaseHTTPRequestHandler):
             output = subprocess.check_output(args=command)
             self.wfile.write(output)
         except Exception as e:
-            self.wfile.write('%s command=%s' % (e.message, command))
+            self.wfile.write(e)
 
 
 def run(server_class=HTTPServer, handler_class=S, port=3000):
