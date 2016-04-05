@@ -2,7 +2,7 @@
 from __future__ import print_function
 
 import cgi
-import subprocess
+from subprocess import Popen, PIPE
 import urlparse
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import SocketServer
@@ -54,12 +54,13 @@ class S(BaseHTTPRequestHandler):
         f = open('/tmp/soapui-project.xml', 'w')
         print(xml, file=f)
         f.close()
-        command = ['/opt/SoapUI/bin/testrunner.sh',
+        p = Popen(['/opt/SoapUI/bin/testrunner.sh',
                    '-s"%s %s"' % (baseurl, suite),
-                   '/tmp/soapui-project.xml']
+                   '/tmp/soapui-project.xml'], stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
         try:
-            output = subprocess.check_output(args=command)
+            output, error = p.communicate()
             self.wfile.write(output)
+            self.wfile.write(error)
         except Exception as e:
             self.wfile.write(e)
 
