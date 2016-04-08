@@ -1,11 +1,23 @@
 # Docker SoapUI
 
-> Docker container that houses a configurable version of SoapUI and runs test suites
+> Docker container that houses a configurable version of SoapUI and runs test suites / cases
 
+How to Use
+==========
 
-# Develop
+With this container running, you can now fire off SoapUI tests by sending the SoapUI project file
+forwards the `3000` port to the container.
 
-> I use Vagrant to mimic the environment of Docker
+```sh
+$ curl --form "project=@/path/to/soapui-project.xml" \
+       --form "suite=TestSuite" \
+       http://localhost:3000
+```
+
+Develop/Test
+============
+
+I use Vagrant to mimic the environment of Docker.
 
 ```bash
 $ vagrant up
@@ -15,32 +27,18 @@ $ vagrant ssh
 # ./server.py
 ```
 
-Use
-===
+Continuous Integration / Response Codes
+=======================================
 
-Once the server is up and running, you can now fire off SoapUI tests by sending the SoapUI project file  
-Vagrant forwards the `3000` port to your local machine.
+After the tests are ran, you will receive the stdout and stderr from the SoapUI test runner,
+as well as an HTTP status code to determine the result of the test run.
 
-```sh
-$ curl --form "data=@/users/ddavison/work/ericsson/soapui/soapui-project.xml" \
-       --form "url=http://jsonplaceholder.typicode.com" \
-       --form "suite=TestSuite" \
-       http://localhost:3000
-```
+*Response Codes*
 
-*Response...*
-```
-================================
-=
-= SOAPUI_HOME = /opt/SoapUI
-=
-================================
-SoapUI 5.2.1 TestCase Runner
-21:25:16,455 INFO  [SoapUITestCaseRunner] Running SoapUI tests in project [Something]
-21:25:16,456 INFO  [SoapUITestCaseRunner] Running TestSuite [http://jsonplaceholder.typicode.com TestSuite], runType = SEQUENTIAL
-21:25:16,463 INFO  [SoapUITestCaseRunner] Running SoapUI testcase [TestCase]
-21:25:16,467 INFO  [SoapUITestCaseRunner] running step [Posts]
-21:25:17,631 INFO  [SoapUITestCaseRunner] Assertion [XPath Match] has status VALID
-21:25:17,634 INFO  [SoapUITestCaseRunner] Finished running SoapUI testcase [TestCase], time taken: 766ms, status: FINISHED
-21:25:17,634 INFO  [SoapUITestCaseRunner] TestSuite [http://jsonplaceholder.typicode.com TestSuite] finished with status [FINISHED] in 1175ms
-```
+| Code | Message | Description |
+| -----|---------|------------ |
+| **200**  | OK      | All SoapUI Tests ran successfully and passed |
+| **550**  | Test Failure(s) | You have failures in the SoapUI Test suite / cases. You can check the content of the request to determine what failed |
+| **551**  | No Suite | You did not specify the `suite` POST parameter with the name of the suite you wanted to run |
+| **552**  | No SoapUI Project | You did not specify the `project` POST parameter with the proper SoapUI XML data.  *Remember*: This needs to be the actual file itself sent as multipart/form-data. E.g: `curl -F "data=@the-soapui-project.xml"` |
+| **500**  | Internal Server Error | An exception occured while running the SoapUI Tests |
