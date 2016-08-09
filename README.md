@@ -5,6 +5,10 @@
 How to Use
 ==========
 
+## Run the container
+`$ docker run -d -p 3000:3000 ddavison/soapui`
+
+## Run tests
 With this container running, you can now fire off SoapUI tests by sending the SoapUI project file
 forwards the `3000` port to the container.
 
