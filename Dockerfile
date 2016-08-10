@@ -8,6 +8,7 @@ ENV   SOAPUI_VERSION  5.2.1
 
 COPY entry_point.sh /opt/bin/entry_point.sh
 COPY server.py /opt/bin/server.py
+COPY server_index.html /opt/bin/server_index.html
 
 RUN chmod +x /opt/bin/entry_point.sh
 RUN chmod +x /opt/bin/server.py
