@@ -13,6 +13,12 @@ class S(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html')
         self.end_headers()
 
+    def do_GET(self):
+        self._set_headers()
+        with open('server_index.html', 'r') as server_index:
+            self.wfile.write(server_index.read().replace('\n', ''))
+
+
     def do_POST(self):
         # self._set_headers()
         ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
