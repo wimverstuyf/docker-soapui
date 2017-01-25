@@ -4,7 +4,7 @@ FROM java:openjdk-7-jdk
 MAINTAINER Daniel Davison <sircapsalot@gmail.com>
 
 #  Version
-ENV   SOAPUI_VERSION  5.2.1
+ENV   SOAPUI_VERSION  5.3.0
 
 COPY entry_point.sh /opt/bin/entry_point.sh
 COPY server.py /opt/bin/server.py
@@ -18,6 +18,9 @@ RUN mkdir -p /opt &&\
     curl  http://cdn01.downloads.smartbear.com/soapui/${SOAPUI_VERSION}/SoapUI-${SOAPUI_VERSION}-linux-bin.tar.gz \
     | gunzip -c - | tar -xf - -C /opt && \
     ln -s /opt/SoapUI-${SOAPUI_VERSION} /opt/SoapUI
+
+# Set working directory
+WORKDIR /opt/bin
 
 # Set environment
 ENV PATH ${PATH}:/opt/SoapUI/bin
