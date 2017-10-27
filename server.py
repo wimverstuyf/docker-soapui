@@ -35,6 +35,7 @@ class S(BaseHTTPRequestHandler):
 
         suite = postvars.get('suite')
         xml = postvars.get('project')
+        properties = postvars.get('properties')
 
         if not suite:
             self.send_response(551, message='No Suite')
@@ -52,12 +53,22 @@ class S(BaseHTTPRequestHandler):
         else:
             xml = xml[0]
 
+        arguments = ['/opt/SoapUI/bin/testrunner.sh',
+                   '-s"%s"' % suite,
+                   '/tmp/soapui-project.xml'];
+
+        if properties:
+            properties = properties[0]
+            f = open('/tmp/global.properties', 'w')
+            print(properties, file=f)
+            f.close()
+            arguments.append('-Dsoapui.properties=/tmp/global.properties')
+
         f = open('/tmp/soapui-project.xml', 'w')
         print(xml, file=f)
         f.close()
-        p = Popen(['/opt/SoapUI/bin/testrunner.sh',
-                   '-s"%s"' % suite,
-                   '/tmp/soapui-project.xml'], stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
+
+        p = Popen(arguments, stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
         try:
             output, error = p.communicate()
 
