@@ -18,6 +18,16 @@ $ curl --form "project=@/path/to/soapui-project.xml" \
        http://localhost:3000
 ```
 
+Optionally, you can send a global properties configuration file.
+
+```sh
+$ curl --form "project=@/path/to/soapui-project.xml" \
+       --form "suite=TestSuite" \
+       --form "properties=@dev.properties" \
+       http://localhost:3000
+```
+
+
 Develop/Test
 ============
 
