@@ -54,8 +54,8 @@ class S(BaseHTTPRequestHandler):
             xml = xml[0]
 
         arguments = ['/opt/SoapUI/bin/testrunner.sh',
-                   '-s"%s"' % suite,
-                   '/tmp/soapui-project.xml'];
+                     '-s"%s"' % suite,
+                     '/tmp/soapui-project.xml']
 
         if properties:
             properties = properties[0]
@@ -72,7 +72,7 @@ class S(BaseHTTPRequestHandler):
         try:
             output, error = p.communicate()
 
-            if p.returncode > 1:
+            if p.returncode >= 1:
                 self.send_response(550, message='Test Failure(s)')
                 self.end_headers()
                 self.wfile.write(output)
