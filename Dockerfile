@@ -1,6 +1,6 @@
 FROM centos:7
 FROM python:2.7
-FROM java:openjdk-7-jdk
+FROM java:openjdk-8-jdk
 MAINTAINER Daniel Davison <sircapsalot@gmail.com>
 
 #  Version
