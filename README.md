@@ -14,16 +14,16 @@ forwards the `3000` port to the container.
 
 ```sh
 $ curl --form "project=@/path/to/soapui-project.xml" \
-       --form "suite=TestSuite" \
        http://localhost:3000
 ```
 
-Optionally, you can send a global properties configuration file.
+Optionally, you can specify the test suite, send a global properties configuration file and send testrunner options.
 
 ```sh
 $ curl --form "project=@/path/to/soapui-project.xml" \
        --form "suite=TestSuite" \
        --form "properties=@dev.properties" \
+       --form "option=-r" \
        http://localhost:3000
 ```
 
@@ -53,6 +53,5 @@ as well as an HTTP status code to determine the result of the test run.
 | -----|---------|------------ |
 | **200**  | OK      | All SoapUI Tests ran successfully and passed |
 | **550**  | Test Failure(s) | You have failures in the SoapUI Test suite / cases. You can check the content of the request to determine what failed |
-| **551**  | No Suite | You did not specify the `suite` POST parameter with the name of the suite you wanted to run |
 | **552**  | No SoapUI Project | You did not specify the `project` POST parameter with the proper SoapUI XML data.  *Remember*: This needs to be the actual file itself sent as multipart/form-data. E.g: `curl -F "data=@the-soapui-project.xml"` |
 | **500**  | Internal Server Error | An exception occured while running the SoapUI Tests |

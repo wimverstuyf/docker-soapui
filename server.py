@@ -36,15 +36,8 @@ class S(BaseHTTPRequestHandler):
         suite = postvars.get('suite')
         xml = postvars.get('project')
         properties = postvars.get('properties')
-
-        if not suite:
-            self.send_response(551, message='No Suite')
-            self.end_headers()
-            self.wfile.write('you need to specify a suite!')
-            return
-        else:
-            suite = suite[0]
-
+        option = postvars.get('option')
+        
         if not xml:
             self.send_response(552, message='No SoapUI Project')
             self.end_headers()
@@ -53,9 +46,19 @@ class S(BaseHTTPRequestHandler):
         else:
             xml = xml[0]
 
-        arguments = ['/opt/SoapUI/bin/testrunner.sh',
-                     '-s"%s"' % suite,
-                     '/tmp/soapui-project.xml']
+        f = open('/tmp/soapui-project.xml', 'w')
+        print(xml, file=f)
+        f.close()
+        
+        arguments = ['/opt/SoapUI/bin/testrunner.sh']
+
+        if suite: 
+            arguments.append('-s"%s"' % suite[0])
+
+        if option:
+            for op in option:
+                for line in op.splitlines():
+                    arguments.append('%s' % line)
 
         if properties:
             properties = properties[0]
@@ -64,9 +67,7 @@ class S(BaseHTTPRequestHandler):
             f.close()
             arguments.append('-Dsoapui.properties=/tmp/global.properties')
 
-        f = open('/tmp/soapui-project.xml', 'w')
-        print(xml, file=f)
-        f.close()
+        arguments.append('/tmp/soapui-project.xml')
 
         p = Popen(arguments, stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=-1)
         try:
