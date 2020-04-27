@@ -16,5 +16,3 @@ WORKDIR /opt/bin
 
 # Set environment
 ENV PATH ${PATH}:/opt/SoapUI/bin
-
-CMD ["/opt/bin/entry_point.sh"]
