@@ -6,7 +6,7 @@ How to Use
 ==========
 
 ## Run the container
-`$ docker run -d -p 3000:3000 wimverstuyf/soapui`
+`$ docker run -d wimverstuyf/soapui`
 
 Develop/Test
 ============
