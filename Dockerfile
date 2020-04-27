@@ -1,3 +1,4 @@
+FROM centos:7
 FROM ruby:2.5
 FROM java:openjdk-8-jdk
 MAINTAINER Wim Verstuyf <wim.verstuyf@codelicious.be>
