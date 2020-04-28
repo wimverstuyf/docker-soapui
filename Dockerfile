@@ -1,6 +1,4 @@
-FROM centos:7
-FROM ruby:2.5
-FROM java:openjdk-8-jdk
+FROM duck8823/java-ruby:openjdk10-ruby2.6.3
 MAINTAINER Wim Verstuyf <wim.verstuyf@codelicious.be>
 
 #  Version
